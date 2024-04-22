@@ -8,8 +8,13 @@ html {
     overflow-x: hidden;
     font-family: $lato;
     font-weight: $regular;
+    background-color: $purple;
     -webkit-tap-highlight-color: transparent;
     -webkit-font-smoothing: antialiased;
+
+    > div {
+      height: 100%;
+    }
   }
 
   p,
@@ -45,11 +50,11 @@ html {
     flex: 0 0 auto;
   }
 
-  footer {
-    flex: 0 0 auto;
-  }
-
   article {
     flex: 1 0 auto;
+  }
+
+  footer {
+    flex: 0 0 auto;
   }
 }

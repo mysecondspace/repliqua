@@ -1,7 +1,6 @@
 @import 'src/styles/index.scss';
 
 .header {
-  background-color: $purple;
   padding: 0 5.6875rem;
   height: 4.5625rem;
   display: grid;
@@ -11,10 +10,8 @@
   justify-content: space-between;
 }
 
-.logo {
-  svg {
-    width: 6.5rem;
-  }
+.logo svg {
+  width: 6.5rem;
 }
 
 .navigation {
@@ -22,15 +19,12 @@
   column-gap: 2.25rem;
   grid-auto-flow: column;
 
-  li {
+  li a {
+    color: $green;
     font-size: 1.125rem;
 
-    a {
-      color: $green;
-
-      &.active {
-        font-weight: $bold;
-      }
+    &.active {
+      font-weight: $bold;
     }
   }
 }

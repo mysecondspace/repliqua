@@ -1,0 +1,32 @@
+@import 'src/styles/index.scss';
+
+.footer {
+  display: grid;
+  height: 35.9375rem;
+  grid-template-columns: 1.7fr 2.3fr;
+
+  div {
+    display: grid;
+    align-items: center;
+    justify-content: right;
+    background-color: $green;
+    padding-right: 5.9375rem;
+
+    span {
+      color: $purple;
+      font-size: 0.875rem;
+      position: absolute;
+      bottom: 1.25rem;
+      left: 1.875rem;
+    }
+  }
+}
+
+.navigation {
+  display: grid;
+  row-gap: 1.875rem;
+
+  li a {
+    color: $white;
+  }
+}
