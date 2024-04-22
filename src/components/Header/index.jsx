@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useLocation } from 'react-router-dom'
 
-import { ReactComponent as Logo } from 'assets/logo-repliqua.svg'
+import { ReactComponent as LogoSmall } from 'assets/repliqua-logo-small.svg'
 
 import styles from './Header.module.scss'
 
@@ -24,7 +24,7 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <a href='/' className={styles.logo}>
-        <Logo />
+        <LogoSmall />
       </a>
       <nav>
         <ul className={styles.navigation}>

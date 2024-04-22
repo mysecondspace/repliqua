@@ -1,8 +1,8 @@
 @import 'src/styles/index.scss';
 
 .header {
+  height: $header-height;
   padding: 0 5.6875rem;
-  height: 4.5625rem;
   display: grid;
   align-items: center;
   align-items: center;
@@ -12,6 +12,10 @@
 
 .logo svg {
   width: 6.5rem;
+
+  &:hover g {
+    animation: fade-out-down forwards;
+  }
 }
 
 .navigation {
