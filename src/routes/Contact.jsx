@@ -1,12 +1,12 @@
 import React from 'react'
 
-const Works = () => {
+const Contact = () => {
   return (
     <div>
-      <h1>Works Page</h1>
+      <h1>Contact Page</h1>
       {/* Add your content here */}
     </div>
   )
 }
 
-export default Works
+export default Contact

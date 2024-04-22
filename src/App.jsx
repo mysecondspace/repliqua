@@ -1,12 +1,25 @@
-import logo from './images/logo.svg'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import styles from './App.module.scss'
+import { Routes as RoutePaths } from './routePaths.js'
+
+import Header from './components/Header'
+
+import Works from './routes/Works'
+import About from './routes/About'
+import Contact from './routes/Contact'
 
 function App() {
   return (
-    <div className={styles.app}>
-      <img src={logo} alt='logo' />
-    </div>
+    <>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path={RoutePaths.WORKS} element={<Works />} />
+          <Route path={RoutePaths.ABOUT} element={<About />} />
+          <Route path={RoutePaths.CONTACT} element={<Contact />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   )
 }
 
