@@ -1,34 +1,68 @@
 @import 'src/styles/index.scss';
 
-.heroSection {
+%sectionStyles {
+  display: grid;
   height: calc(100vh - $header-height);
-  position: relative;
+
+  > div:not([class]) {
+    display: grid;
+  }
+
+  p {
+    font-size: 1.125rem;
+    max-width: 37.5rem;
+    line-height: 1.3em;
+    font-weight: $light;
+    color: $black;
+  }
+}
+
+%imageStyles {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-height: calc(100vh - $header-height);
+}
+
+.hoverImageWrapper {
+  overflow: hidden;
   display: grid;
 
   img {
-    width: 100%;
-    height: 100%;
+    @extend %imageStyles;
+    transition: transform $time ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+}
+
+.heroSection {
+  @extend %sectionStyles;
+
+  img {
+    @extend %imageStyles;
     z-index: map-get($z-index, hidden);
     position: absolute;
-    object-fit: cover;
   }
 
   svg {
-    width: 26.5625rem;
-    height: 26.5625rem;
-    position: absolute;
     margin: auto;
+    position: absolute;
+    height: 26.5625rem;
+    width: 26.5625rem;
     top: 22%;
     right: 0;
     left: 0;
   }
 }
 
-.content {
-  display: grid;
-  width: 42.5rem;
+.heroSectionContent {
+  margin: auto 15vw 10vh auto;
   row-gap: 1.5rem;
-  margin: auto 15% 9.375rem auto;
+  width: 42.5rem;
 
   h1 {
     font-size: 2.25rem;
@@ -37,8 +71,28 @@
   }
 
   p {
-    line-height: 1.5;
-    font-weight: $light;
-    font-size: 1.125rem;
+    max-width: 100%;
   }
+}
+
+.columnSection {
+  @extend %sectionStyles;
+  grid-template-columns: $template-columns;
+
+  > div:not([class]) {
+    grid-template-rows: 50vh calc(50vh - $header-height);
+  }
+}
+
+.rowSection {
+  @extend %sectionStyles;
+  grid-template-rows: 60vh calc(40vh - $header-height);
+
+  > div:not([class]) {
+    grid-template-columns: $template-columns;
+  }
+}
+
+.sectionContent {
+  padding: 7.5rem 0 0 6.5625rem;
 }

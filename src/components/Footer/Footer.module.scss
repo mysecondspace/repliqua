@@ -3,7 +3,7 @@
 .footer {
   display: grid;
   height: 35.9375rem;
-  grid-template-columns: 1.7fr 2.3fr;
+  grid-template-columns: $template-columns;
 
   div {
     display: grid;

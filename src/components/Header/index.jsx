@@ -23,16 +23,18 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      <a href='/' className={styles.logo}>
-        <LogoSmall />
-      </a>
-      <nav>
-        <ul className={styles.navigation}>
-          {renderLink('/', 'Works')}
-          {renderLink('/about', 'About')}
-          {renderLink('/contact', 'Contact')}
-        </ul>
-      </nav>
+      <div className={styles.container}>
+        <a href='/' className={styles.logo}>
+          <LogoSmall />
+        </a>
+        <nav>
+          <ul className={styles.navigation}>
+            {renderLink('/', 'Works')}
+            {renderLink('/about', 'About')}
+            {renderLink('/contact', 'Contact')}
+          </ul>
+        </nav>
+      </div>
     </header>
   )
 }

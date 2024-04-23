@@ -2,12 +2,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import { Routes as RoutePaths } from './routePaths.js'
 
-import Header from './components/Header'
-import Footer from './components/Footer'
+import Header from './components/Header/index.jsx'
+import Footer from './components/Footer/index.jsx'
 
-import Works from './routes/Works'
-import About from './routes/About'
-import Contact from './routes/Contact'
+import Works from './routes/Works/index.jsx'
+import About from './routes/About.jsx'
+import Contact from './routes/Contact.jsx'
 
 import styles from './App.module.scss'
 

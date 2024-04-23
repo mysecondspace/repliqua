@@ -1,13 +1,19 @@
 @import 'src/styles/index.scss';
 
 .header {
-  height: $header-height;
+  z-index: map-get($z-index, default);
+  background-color: $purple;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
   padding: 0 5.6875rem;
-  display: grid;
-  align-items: center;
-  align-items: center;
-  grid-auto-flow: column;
+  height: $header-height;
   justify-content: space-between;
+  grid-auto-flow: column;
+  align-items: center;
+  display: grid;
 }
 
 .logo svg {
