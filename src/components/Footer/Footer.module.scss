@@ -1,9 +1,9 @@
 @import 'src/styles/index.scss';
 
 .footer {
-  display: grid;
+  @extend %containerStyles;
+  background-color: $purple;
   height: 35.9375rem;
-  grid-template-columns: $template-columns;
 
   div {
     display: grid;

@@ -16,13 +16,13 @@ import BridgeImage from 'assets/images/bridge.jpg'
 import FunicularImage from 'assets/images/funicular.jpg'
 import BuildingSquaredImage from 'assets/images/building-squared.jpg'
 import RainImage from 'assets/images/rain.jpg'
-import AirportClose from 'assets/images/ariport-close.jpg'
+import AirportCloseImage from 'assets/images/ariport-close.jpg'
 
 import styles from './Works.module.scss'
 
 const Works = () => {
   return (
-    <article className={styles.worksPage}>
+    <>
       <section className={styles.heroSection}>
         <img
           src={HeroImage}
@@ -32,10 +32,11 @@ const Works = () => {
         <div className={styles.heroSectionContent}>
           <h1>Some title text with sophisticated text goes here</h1>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
-            ipsam modi possimus aliquam pariatur totam quaerat omnis tempora
-            necessitatibus. Earum dicta distinctio repellendus illo mollitia.
-            Consequuntur nesciunt ad tenetur aliquid.
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+            commodo ligula eget dolor. Aenean massa. Cum sociis natoque
+            penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+            Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+            Nulla consequat massa quis enim. Donec pede justo, fringilla vel.
           </p>
         </div>
       </section>
@@ -72,7 +73,7 @@ const Works = () => {
         </div>
         <div>
           <div className={styles.colorGreen}></div>
-          <div className={clsx(styles.sectionContent, styles.colorSand)}>
+          <div className={clsx(styles.sectionContent, styles.colorFoggy)}>
             <p>
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem,
               deserunt doloribus. Corporis officia nostrum ex. Nisi hic maiores
@@ -123,7 +124,7 @@ const Works = () => {
               alt='Lorem ipsum dolor sit amet consectetur adipisicing eli'
             />
           </div>
-          <div className={clsx(styles.sectionContent, styles.colorFoggy)}>
+          <div className={clsx(styles.sectionContent, styles.colorSand)}>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
               molestiae qui facere quidem. Et tempore vitae at facilis sed,
@@ -189,11 +190,11 @@ const Works = () => {
       </section>
       <section className={styles.hoverImageWrapper}>
         <img
-          src={AirportClose}
+          src={AirportCloseImage}
           alt='Lorem ipsum dolor sit amet consectetur adipisicing eli'
         />
       </section>
-    </article>
+    </>
   )
 }
 

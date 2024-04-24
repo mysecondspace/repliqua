@@ -1,19 +1,19 @@
 @import 'src/styles/index.scss';
 
+$screenHeight: calc(100vh - $header-height);
+
 %sectionStyles {
   display: grid;
-  height: calc(100vh - $header-height);
+  height: $screenHeight;
 
-  > div:not([class]) {
+  > div {
     display: grid;
   }
 
   p {
+    @extend %paragraphStyles;
     font-size: 1.125rem;
     max-width: 37.5rem;
-    line-height: 1.3em;
-    font-weight: $light;
-    color: $black;
   }
 }
 
@@ -21,7 +21,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  max-height: calc(100vh - $header-height);
+  max-height: $screenHeight;
 }
 
 .hoverImageWrapper {
@@ -44,30 +44,18 @@
 
   img {
     @extend %imageStyles;
-    z-index: map-get($z-index, hidden);
     position: absolute;
   }
 
   svg {
     margin: auto;
     position: absolute;
-    height: 26.5625rem;
-    width: 26.5625rem;
-    top: 22%;
+    width: $logo-large-size;
+    height: $logo-large-size;
+    max-height: 47vh;
+    top: 22vh;
     right: 0;
     left: 0;
-  }
-}
-
-.heroSectionContent {
-  margin: auto 15vw 10vh auto;
-  row-gap: 1.5rem;
-  width: 42.5rem;
-
-  h1 {
-    font-size: 2.25rem;
-    font-weight: $bold;
-    max-width: 75%;
   }
 
   p {
@@ -75,11 +63,21 @@
   }
 }
 
-.columnSection {
-  @extend %sectionStyles;
-  grid-template-columns: $template-columns;
+.heroSectionContent {
+  @extend %contentStyles;
+  margin: auto 15vw 10vh auto;
+  z-index: map-get($z-index, default);
+}
 
-  > div:not([class]) {
+.sectionContent {
+  padding: 7.5rem 0 0 6.5625rem;
+}
+
+.columnSection {
+  @extend %containerStyles;
+  @extend %sectionStyles;
+
+  > div:not(.hoverImageWrapper) {
     grid-template-rows: 50vh calc(50vh - $header-height);
   }
 }
@@ -88,11 +86,7 @@
   @extend %sectionStyles;
   grid-template-rows: 60vh calc(40vh - $header-height);
 
-  > div:not([class]) {
-    grid-template-columns: $template-columns;
+  > div:not(.hoverImageWrapper) {
+    @extend %containerStyles;
   }
-}
-
-.sectionContent {
-  padding: 7.5rem 0 0 6.5625rem;
 }

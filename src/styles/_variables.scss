@@ -1,27 +1,29 @@
 $time: 0.25s;
 $header-height: 4.5625rem;
+$logo-large-size: 26.5625rem;
 $template-columns: 1.7fr 2.3fr;
 
 $z-index: (
-  hidden: -1,
   default: 1,
 );
 
 // main-colors
-$green: #2f464c;
-$purple: #cec8db;
 $black: #000;
 $white: #fff;
 
+$purple: #cec8db;
+$green: #2f464c;
+$green-20: rgb(47, 70, 76, 0.2);
+$green-50: rgb(47, 70, 76, 0.5);
+
 // additional colors
+$sand: #beb3b0;
 $blue: #acb9d2;
 $foggy: #a7a6ab;
-$sand: #beb3b0;
 $forest: #8a9f9e;
 
 // font
 $lato: 'Lato', sans-serif;
-
-$light: 300;
 $regular: 400;
+$light: 300;
 $bold: 700;

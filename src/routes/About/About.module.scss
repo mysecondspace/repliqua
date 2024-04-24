@@ -1,0 +1,109 @@
+@import 'src/styles/index.scss';
+
+$stepSize: 4.875rem;
+
+.aboutPage {
+  padding-top: 6.25rem;
+  margin: 0 92px 0 144px;
+
+  svg {
+    margin-top: 5.125rem;
+    width: $logo-large-size;
+    height: $logo-large-size;
+  }
+}
+
+.aboutPageContent {
+  @extend %contentStyles;
+
+  p {
+    @extend %paragraphStyles;
+  }
+}
+
+.container {
+  @extend %containerStyles;
+}
+
+.stepsBlock {
+  margin-top: 3.125rem;
+  column-gap: 1.875rem;
+  grid-auto-flow: column;
+  width: fit-content;
+  display: grid;
+
+  > div {
+    position: relative;
+
+    &:not(:last-of-type)::before {
+      height: 0.125rem;
+      top: calc($stepSize / 2);
+      left: calc($stepSize + 0.125rem);
+      width: calc(100% - $stepSize + 1.875rem - 0.125rem);
+      background-color: $green-20;
+      position: absolute;
+      content: '';
+    }
+  }
+
+  .step {
+    color: $green;
+    width: $stepSize;
+    height: $stepSize;
+    border-radius: 50%;
+    font-weight: $bold;
+    font-size: 1.125rem;
+    border: 0.0625rem solid $green-50;
+    justify-content: center;
+    align-items: center;
+    display: grid;
+  }
+
+  .info {
+    display: grid;
+    margin-top: 1.875rem;
+    row-gap: 0.875rem;
+    color: $green;
+
+    p {
+      font-size: 1.125rem;
+      line-height: 1.16em;
+      font-weight: $bold;
+    }
+
+    span {
+      font-size: 0.875rem;
+      line-height: 1.5em;
+    }
+  }
+}
+
+.teamBlock {
+  margin: 5.625rem 0 20.9375rem;
+
+  > div {
+    gap: 3.125rem 7.5rem;
+    margin-top: 1.5625rem;
+    grid-template-columns: repeat(3, 1fr);
+    display: grid;
+  }
+
+  .member {
+    max-width: 13.75rem;
+    row-gap: 1.125rem;
+    display: grid;
+
+    img {
+      width: 100%;
+    }
+
+    h3 {
+      font-weight: $bold;
+      font-size: 1.125rem;
+    }
+
+    p {
+      @extend %paragraphStyles;
+    }
+  }
+}
