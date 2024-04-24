@@ -6,11 +6,11 @@ import styles from './Contact.module.scss'
 
 const Contact = () => {
   return (
-    <section className={styles.contactPage}>
-      <div className={styles.container}>
+    <section className={styles.regularPage}>
+      <div className={styles.mainContainer}>
         <LogoLarge />
         <div>
-          <div className={styles.contactPageContent}>
+          <div className={styles.regularPageContent}>
             <h1>Contact us</h1>
             <p>
               Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean

@@ -1,22 +1,5 @@
 @import 'src/styles/index.scss';
 
-.contactPage {
-  @extend %regularPageStyles;
-
-  a {
-    @extend %headingStyles;
-  }
-}
-
-.contactPageContent {
-  @extend %contentStyles;
+.regularPageContent {
   margin-bottom: 3.75rem;
-
-  p {
-    @extend %paragraphStyles;
-  }
-}
-
-.container {
-  @extend %containerStyles;
 }

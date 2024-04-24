@@ -2,22 +2,6 @@
 
 $stepSize: 4.875rem;
 
-.aboutPage {
-  @extend %regularPageStyles;
-}
-
-.aboutPageContent {
-  @extend %contentStyles;
-
-  p {
-    @extend %paragraphStyles;
-  }
-}
-
-.container {
-  @extend %containerStyles;
-}
-
 .stepsBlock {
   margin-top: 3.125rem;
   column-gap: 1.875rem;

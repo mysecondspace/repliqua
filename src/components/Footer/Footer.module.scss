@@ -1,7 +1,6 @@
 @import 'src/styles/index.scss';
 
 .footer {
-  @extend %containerStyles;
   background-color: $purple;
   height: 35.9375rem;
 

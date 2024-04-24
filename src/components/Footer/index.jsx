@@ -1,10 +1,11 @@
 import React from 'react'
+import clsx from 'clsx'
 
 import styles from './Footer.module.scss'
 
 const Footer = () => {
   return (
-    <footer className={styles.footer}>
+    <footer className={clsx(styles.footer, styles.mainContainer)}>
       <div>
         <nav>
           <ul className={styles.navigation}>

@@ -1,8 +1,3 @@
-%containerStyles {
-  grid-template-columns: $template-columns;
-  display: grid;
-}
-
 %contentStyles {
   max-width: 42.5rem;
   row-gap: 1.5rem;
@@ -22,7 +17,12 @@
   font-weight: $light;
 }
 
-%regularPageStyles {
+.mainContainer {
+  grid-template-columns: $template-columns;
+  display: grid;
+}
+
+.regularPage {
   padding-top: 6.25rem;
   margin: 0 5.75rem 0 9rem;
 
@@ -30,5 +30,17 @@
     width: $logo-large-size;
     height: $logo-large-size;
     margin: 5.125rem 0 17.5rem;
+  }
+
+  a {
+    @extend %headingStyles;
+  }
+}
+
+.regularPageContent {
+  @extend %contentStyles;
+
+  p {
+    @extend %paragraphStyles;
   }
 }

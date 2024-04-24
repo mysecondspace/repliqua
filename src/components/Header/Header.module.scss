@@ -2,9 +2,10 @@
 
 .header {
   z-index: map-get($z-index, default);
+  width: calc(100% - $aside-width);
+  padding-right: $aside-width;
   background-color: $purple;
   position: fixed;
-  width: 100%;
 }
 
 .container {

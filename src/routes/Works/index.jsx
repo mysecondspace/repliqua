@@ -40,7 +40,7 @@ const Works = () => {
           </p>
         </div>
       </section>
-      <section className={styles.columnSection}>
+      <section className={clsx(styles.columnSection, styles.mainContainer)}>
         <div className={styles.hoverImageWrapper}>
           <img
             src={BuildingDayImage}
@@ -71,7 +71,7 @@ const Works = () => {
             alt='Lorem ipsum dolor sit amet consectetur adipisicing eli'
           />
         </div>
-        <div>
+        <div className={styles.mainContainer}>
           <div className={styles.colorGreen}></div>
           <div className={clsx(styles.sectionContent, styles.colorFoggy)}>
             <p>
@@ -84,7 +84,7 @@ const Works = () => {
         </div>
       </section>
       <section className={styles.rowSection}>
-        <div>
+        <div className={styles.mainContainer}>
           <div className={styles.hoverImageWrapper}>
             <img
               src={StonesImage}
@@ -98,7 +98,7 @@ const Works = () => {
             />
           </div>
         </div>
-        <div>
+        <div className={styles.mainContainer}>
           <div className={styles.colorGreen}></div>
           <div className={clsx(styles.sectionContent, styles.colorFoggy)}>
             <p>
@@ -110,7 +110,7 @@ const Works = () => {
           </div>
         </div>
       </section>
-      <section className={styles.columnSection}>
+      <section className={clsx(styles.columnSection, styles.mainContainer)}>
         <div className={styles.hoverImageWrapper}>
           <img
             src={BuildingTallImage}
@@ -134,7 +134,7 @@ const Works = () => {
           </div>
         </div>
       </section>
-      <section className={styles.columnSection}>
+      <section className={clsx(styles.columnSection, styles.mainContainer)}>
         <div className={styles.hoverImageWrapper}>
           <img
             src={BridgeGlassImage}
@@ -164,7 +164,7 @@ const Works = () => {
           alt='Lorem ipsum dolor sit amet consectetur adipisicing eli'
         />
       </section>
-      <section className={styles.columnSection}>
+      <section className={clsx(styles.columnSection, styles.mainContainer)}>
         <div className={styles.hoverImageWrapper}>
           <img
             src={BuildingSquaredImage}

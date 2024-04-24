@@ -8,11 +8,11 @@ import styles from './About.module.scss'
 
 const About = () => {
   return (
-    <section className={styles.aboutPage}>
-      <div className={styles.container}>
+    <section className={styles.regularPage}>
+      <div className={styles.mainContainer}>
         <LogoLarge />
         <div>
-          <div className={styles.aboutPageContent}>
+          <div className={styles.regularPageContent}>
             <h1>To enlighten the beauty of what you see bla bla bla</h1>
             <p>
               Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
