@@ -9,7 +9,26 @@
   display: grid;
 }
 
+%headingStyles {
+  font-size: 2.25rem;
+  line-height: 1.33em;
+  font-weight: $bold;
+  max-width: 75%;
+  color: $green;
+}
+
 %paragraphStyles {
   line-height: 1.5rem;
   font-weight: $light;
+}
+
+%regularPageStyles {
+  padding-top: 6.25rem;
+  margin: 0 5.75rem 0 9rem;
+
+  svg {
+    width: $logo-large-size;
+    height: $logo-large-size;
+    margin: 5.125rem 0 17.5rem;
+  }
 }

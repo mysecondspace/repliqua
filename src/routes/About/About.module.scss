@@ -3,14 +3,7 @@
 $stepSize: 4.875rem;
 
 .aboutPage {
-  padding-top: 6.25rem;
-  margin: 0 92px 0 144px;
-
-  svg {
-    margin-top: 5.125rem;
-    width: $logo-large-size;
-    height: $logo-large-size;
-  }
+  @extend %regularPageStyles;
 }
 
 .aboutPageContent {

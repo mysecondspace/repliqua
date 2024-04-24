@@ -7,7 +7,7 @@ import Footer from './components/Footer'
 
 import Works from './routes/Works'
 import About from './routes/About'
-import Contact from './routes/Contact.jsx'
+import Contact from './routes/Contact'
 
 import styles from './App.module.scss'
 
