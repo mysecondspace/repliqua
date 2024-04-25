@@ -5,7 +5,8 @@ $logo-large-size: 26.5625rem;
 $template-columns: 1.7fr 2.3fr;
 
 $z-index: (
-  default: 1,
+  default: 0,
+  header: 2,
 );
 
 // main-colors

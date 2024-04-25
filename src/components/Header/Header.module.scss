@@ -1,7 +1,7 @@
 @import 'src/styles/index.scss';
 
 .header {
-  z-index: map-get($z-index, default);
+  z-index: map-get($z-index, header);
   width: calc(100% - $aside-width);
   padding-right: $aside-width;
   background-color: $purple;

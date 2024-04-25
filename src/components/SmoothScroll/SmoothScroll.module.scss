@@ -1,0 +1,41 @@
+@import 'src/styles/index.scss';
+
+$progressBarWidth: 0.0625rem;
+
+.smoothScroll {
+  margin-right: $aside-width;
+}
+
+.pageScroll {
+  right: calc($aside-width / 2);
+  height: 8.4375rem;
+  position: fixed;
+  bottom: 21.5vh;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: $progressBarWidth;
+    background-color: $purple-60;
+    border-radius: 0.125rem;
+    height: 100%;
+  }
+
+  > div {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: $purple;
+    transform: translateX(calc(-50% + $progressBarWidth / 2));
+    position: absolute;
+  }
+}
+
+.buttonOnScroll {
+  cursor: pointer;
+  right: calc($aside-width / 2);
+  transform: translateX(calc(-50% + 1.25rem - $progressBarWidth / 2));
+  position: fixed;
+  bottom: 3.25vh;
+  width: 1.25rem;
+}
