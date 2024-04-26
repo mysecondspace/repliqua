@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import clsx from 'clsx'
+
+import { ScrollOffsetContext } from 'utils/ScrollOffsetContext'
 
 import { ReactComponent as LogoLarge } from 'assets/repliqua-logo-large.svg'
 
@@ -21,6 +23,12 @@ import AirportCloseImage from 'assets/images/ariport-close.jpg'
 import styles from './Works.module.scss'
 
 const Works = () => {
+  const scrollOffset = useContext(ScrollOffsetContext)
+
+  const getTransformStyle = (offset, factor) => ({
+    transform: `translateY(-${offset * factor}px)`,
+  })
+
   return (
     <>
       <section className={styles.heroSection}>
@@ -28,8 +36,11 @@ const Works = () => {
           src={HeroImage}
           alt='Some title text with sophisticated text goes here'
         />
-        <LogoLarge />
-        <div className={styles.heroSectionContent}>
+        <LogoLarge style={getTransformStyle(scrollOffset, 0.15)} />
+        <div
+          className={styles.heroSectionContent}
+          style={getTransformStyle(scrollOffset, 0.05)}
+        >
           <h1>Some title text with sophisticated text goes here</h1>
           <p>
             Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean

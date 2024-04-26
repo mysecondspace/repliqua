@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { ScrollOffsetContext } from 'utils/ScrollOffsetContext'
+
 import Scrollbar from 'smooth-scrollbar'
 import OverscrollPlugin from 'smooth-scrollbar/plugins/overscroll'
 
@@ -25,6 +27,7 @@ const options = {
 }
 
 const SmoothScroll = ({ children }) => {
+  const [scrollOffset, setScrollOffset] = useState(0)
   const [percentage, setPercentage] = useState(0)
   const scroll = useRef(null)
   const ref = useRef(null)
@@ -38,6 +41,7 @@ const SmoothScroll = ({ children }) => {
   const updateScrollPercentage = ({ offset: { y } }) => {
     const scrollPercent = y / scroll.current.limit.y
 
+    setScrollOffset(y)
     setPercentage(scrollPercent * 100)
   }
 
@@ -63,7 +67,7 @@ const SmoothScroll = ({ children }) => {
   }
 
   return (
-    <>
+    <ScrollOffsetContext.Provider value={scrollOffset}>
       <div className={styles.smoothScroll} ref={ref}>
         {children}
       </div>
@@ -71,7 +75,7 @@ const SmoothScroll = ({ children }) => {
         <div style={{ top: `${percentage}%` }}></div>
       </div>
       <ArrowIcon className={styles.buttonOnScroll} onClick={handleScroll} />
-    </>
+    </ScrollOffsetContext.Provider>
   )
 }
 
