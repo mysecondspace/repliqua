@@ -13,7 +13,7 @@ html {
     -webkit-tap-highlight-color: transparent;
     -webkit-font-smoothing: antialiased;
 
-    > div {
+    > div[id] {
       height: 100%;
     }
   }

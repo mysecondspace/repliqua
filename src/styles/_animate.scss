@@ -1,9 +1,9 @@
-@keyframes fade-out-down {
-  0% {
-    transform: translateY(0);
+@keyframes fade-out {
+  100% {
+    opacity: 0;
   }
 
-  100% {
-    transform: translateY(0.75rem);
+  0% {
+    opacity: 1;
   }
 }

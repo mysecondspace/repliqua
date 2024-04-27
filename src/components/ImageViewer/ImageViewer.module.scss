@@ -1,0 +1,78 @@
+@import 'src/styles/index.scss';
+
+.overlay {
+  z-index: map-get($z-index, modal);
+  transition: opacity $time ease-in-out;
+  position: fixed;
+  height: auto;
+  opacity: 0;
+  inset: 0;
+
+  &.openOverlay {
+    opacity: 1;
+  }
+}
+
+.closeOverlay {
+  animation: fade-out $time forwards;
+}
+
+.modal {
+  height: calc(100vh - 3.25rem);
+  padding: 1.875rem 2.625rem 2.625rem;
+  grid-template-rows: auto 1fr;
+  background-color: $purple;
+  row-gap: 1.625rem;
+  display: grid;
+
+  span {
+    cursor: pointer;
+    font-size: 1.0625rem;
+  }
+}
+
+.body {
+  align-items: center;
+  grid-template-rows: 1fr auto;
+  row-gap: 0.9375rem;
+  display: grid;
+
+  img {
+    margin: 0 auto;
+    transition: opacity $time ease-in-out;
+    object-fit: contain;
+    max-height: 85vh;
+    max-width: 100%;
+  }
+}
+
+.controls {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+
+  span {
+    &:first-of-type svg {
+      margin-right: 0.625rem;
+      transform: rotate(90deg);
+    }
+
+    &:last-of-type svg {
+      margin-left: 0.625rem;
+      transform: rotate(-90deg);
+    }
+
+    svg {
+      width: 0.6875rem;
+      margin-bottom: 0.125rem;
+
+      path {
+        fill: $black;
+      }
+    }
+  }
+}
+
+.buttonClose {
+  margin-left: auto;
+}

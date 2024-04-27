@@ -66,7 +66,7 @@ $screenHeight: calc(100vh - $header-height);
 
 .heroSectionContent {
   @extend %contentStyles;
-  margin: auto 15vw 10vh auto;
+  margin: auto 12vw 10vh auto;
   z-index: map-get($z-index, default);
 }
 

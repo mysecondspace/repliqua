@@ -21,7 +21,7 @@
   width: 6.5rem;
 
   &:hover g {
-    animation: fade-out-down forwards;
+    animation: fade-out $time forwards;
   }
 }
 

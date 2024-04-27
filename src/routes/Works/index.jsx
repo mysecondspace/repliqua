@@ -1,29 +1,60 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useCallback } from 'react'
 import clsx from 'clsx'
 
 import { ScrollOffsetContext } from 'utils/ScrollOffsetContext'
 
+import images from './images'
+import ImageViewer from 'components/ImageViewer'
+
 import { ReactComponent as LogoLarge } from 'assets/repliqua-logo-large.svg'
 
 import HeroImage from 'assets/images/hero-image.jpg'
-import BuildingDayImage from 'assets/images/building-day.jpg'
-import BuildingNightImage from 'assets/images/building-night.jpg'
-import AirportFarImage from 'assets/images/airport-far.jpg'
-import StonesImage from 'assets/images/stones.jpg'
-import SilhouetteImage from 'assets/images/silhouette.jpg'
-import BuildingTallImage from 'assets/images/building-tall.jpg'
-import SeaImage from 'assets/images/sea.jpg'
-import BridgeGlassImage from 'assets/images/bridge-glass.jpg'
-import BridgeImage from 'assets/images/bridge.jpg'
-import FunicularImage from 'assets/images/funicular.jpg'
-import BuildingSquaredImage from 'assets/images/building-squared.jpg'
-import RainImage from 'assets/images/rain.jpg'
-import AirportCloseImage from 'assets/images/ariport-close.jpg'
 
 import styles from './Works.module.scss'
 
+const ImageElement = ({ index, openModal }) => (
+  <div className={styles.hoverImageWrapper}>
+    <img
+      src={images[index].src}
+      alt={images[index].alt}
+      onClick={() => openModal(index)}
+    />
+  </div>
+)
+
 const Works = () => {
   const scrollOffset = useContext(ScrollOffsetContext)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isOpen, setIsOpen] = useState(false)
+  const [opacity, setOpacity] = useState(1)
+
+  const openModal = (imageIndex) => {
+    setIsOpen(true)
+    setCurrentImageIndex(imageIndex)
+  }
+
+  const closeModal = () => {
+    setIsOpen(false)
+    setTimeout(() => setCurrentImageIndex(0), 250)
+  }
+
+  const changeImage = useCallback(
+    (change) => {
+      setOpacity(0)
+
+      setTimeout(() => {
+        setCurrentImageIndex(
+          (currentImageIndex + change + images.length) % images.length
+        )
+
+        setOpacity(1)
+      }, 250)
+    },
+    [currentImageIndex]
+  )
+
+  const prevImage = useCallback(() => changeImage(-1), [changeImage])
+  const nextImage = useCallback(() => changeImage(1), [changeImage])
 
   const getTransformStyle = (offset, factor) => ({
     transform: `translateY(-${offset * factor}px)`,
@@ -52,19 +83,9 @@ const Works = () => {
         </div>
       </section>
       <section className={clsx(styles.columnSection, styles.mainContainer)}>
-        <div className={styles.hoverImageWrapper}>
-          <img
-            src={BuildingDayImage}
-            alt='Lorem ipsum dolor sit amet consectetur adipisicing eli'
-          />
-        </div>
+        <ImageElement index={0} openModal={openModal} />
         <div>
-          <div className={styles.hoverImageWrapper}>
-            <img
-              src={BuildingNightImage}
-              alt='Lorem ipsum dolor sit amet consectetur adipisicing eli'
-            />
-          </div>
+          <ImageElement index={1} openModal={openModal} />
           <div className={clsx(styles.sectionContent, styles.colorBlue)}>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
@@ -76,12 +97,7 @@ const Works = () => {
         </div>
       </section>
       <section className={styles.rowSection}>
-        <div className={styles.hoverImageWrapper}>
-          <img
-            src={AirportFarImage}
-            alt='Lorem ipsum dolor sit amet consectetur adipisicing eli'
-          />
-        </div>
+        <ImageElement index={2} openModal={openModal} />
         <div className={styles.mainContainer}>
           <div className={styles.colorGreen}></div>
           <div className={clsx(styles.sectionContent, styles.colorFoggy)}>
@@ -96,18 +112,8 @@ const Works = () => {
       </section>
       <section className={styles.rowSection}>
         <div className={styles.mainContainer}>
-          <div className={styles.hoverImageWrapper}>
-            <img
-              src={StonesImage}
-              alt='Lorem ipsum dolor sit amet consectetur adipisicing eli'
-            />
-          </div>
-          <div className={styles.hoverImageWrapper}>
-            <img
-              src={SilhouetteImage}
-              alt='Lorem ipsum dolor sit amet consectetur adipisicing eli'
-            />
-          </div>
+          <ImageElement index={3} openModal={openModal} />
+          <ImageElement index={4} openModal={openModal} />
         </div>
         <div className={styles.mainContainer}>
           <div className={styles.colorGreen}></div>
@@ -122,19 +128,9 @@ const Works = () => {
         </div>
       </section>
       <section className={clsx(styles.columnSection, styles.mainContainer)}>
-        <div className={styles.hoverImageWrapper}>
-          <img
-            src={BuildingTallImage}
-            alt='Lorem ipsum dolor sit amet consectetur adipisicing eli'
-          />
-        </div>
+        <ImageElement index={5} openModal={openModal} />
         <div>
-          <div className={styles.hoverImageWrapper}>
-            <img
-              src={SeaImage}
-              alt='Lorem ipsum dolor sit amet consectetur adipisicing eli'
-            />
-          </div>
+          <ImageElement index={6} openModal={openModal} />
           <div className={clsx(styles.sectionContent, styles.colorSand)}>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
@@ -146,19 +142,9 @@ const Works = () => {
         </div>
       </section>
       <section className={clsx(styles.columnSection, styles.mainContainer)}>
-        <div className={styles.hoverImageWrapper}>
-          <img
-            src={BridgeGlassImage}
-            alt='Lorem ipsum dolor sit amet consectetur adipisicing eli'
-          />
-        </div>
+        <ImageElement index={7} openModal={openModal} />
         <div>
-          <div className={styles.hoverImageWrapper}>
-            <img
-              src={BridgeImage}
-              alt='Lorem ipsum dolor sit amet consectetur adipisicing eli'
-            />
-          </div>
+          <ImageElement index={8} openModal={openModal} />
           <div className={clsx(styles.sectionContent, styles.colorForest)}>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
@@ -169,26 +155,13 @@ const Works = () => {
           </div>
         </div>
       </section>
-      <section className={styles.hoverImageWrapper}>
-        <img
-          src={FunicularImage}
-          alt='Lorem ipsum dolor sit amet consectetur adipisicing eli'
-        />
+      <section>
+        <ImageElement index={9} openModal={openModal} />
       </section>
       <section className={clsx(styles.columnSection, styles.mainContainer)}>
-        <div className={styles.hoverImageWrapper}>
-          <img
-            src={BuildingSquaredImage}
-            alt='Lorem ipsum dolor sit amet consectetur adipisicing eli'
-          />
-        </div>
+        <ImageElement index={10} openModal={openModal} />
         <div>
-          <div className={styles.hoverImageWrapper}>
-            <img
-              src={RainImage}
-              alt='Lorem ipsum dolor sit amet consectetur adipisicing eli'
-            />
-          </div>
+          <ImageElement index={11} openModal={openModal} />
           <div className={clsx(styles.sectionContent, styles.colorFoggy)}>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
@@ -199,12 +172,18 @@ const Works = () => {
           </div>
         </div>
       </section>
-      <section className={styles.hoverImageWrapper}>
-        <img
-          src={AirportCloseImage}
-          alt='Lorem ipsum dolor sit amet consectetur adipisicing eli'
-        />
+      <section>
+        <ImageElement index={12} openModal={openModal} />
       </section>
+      <ImageViewer
+        isOpen={isOpen}
+        closeModal={closeModal}
+        images={images}
+        currentImageIndex={currentImageIndex}
+        opacity={opacity}
+        prevImage={prevImage}
+        nextImage={nextImage}
+      />
     </>
   )
 }
