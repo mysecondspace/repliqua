@@ -9,7 +9,7 @@ const Contact = () => {
     <section className={styles.regularPage}>
       <div className={styles.mainContainer}>
         <LogoLarge />
-        <div>
+        <div className={styles.contactBlock}>
           <div className={styles.regularPageContent}>
             <h1>Contact us</h1>
             <p>

@@ -1,11 +1,17 @@
 @import 'src/styles/index.scss';
 
-$screenHeight: calc(100vh - $header-height);
-
 %sectionStyles {
   display: grid;
   position: relative;
   height: $screenHeight;
+
+  @include media(phone) {
+    height: auto;
+  }
+
+  @include media(tabletPortrait) {
+    height: auto;
+  }
 
   > div {
     display: grid;
@@ -15,6 +21,10 @@ $screenHeight: calc(100vh - $header-height);
     @extend %paragraphStyles;
     font-size: 1.125rem;
     max-width: 37.5rem;
+
+    @include media(phone) {
+      font-size: 0.875rem;
+    }
   }
 }
 
@@ -22,7 +32,13 @@ $screenHeight: calc(100vh - $header-height);
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: left;
   max-height: $screenHeight;
+
+  @include media(phone) {
+    max-height: 100%;
+    height: auto;
+  }
 }
 
 .hoverImageWrapper {
@@ -43,46 +59,135 @@ $screenHeight: calc(100vh - $header-height);
 .heroSection {
   @extend %sectionStyles;
 
+  @include media(phone) {
+    height: $screenHeightMobile;
+  }
+
+  @include media(tabletPortrait) {
+    height: $screenHeight;
+  }
+
   img {
     @extend %imageStyles;
+    animation: fade-in $time-smooth $time forwards;
     position: absolute;
+    opacity: 0;
+
+    @include media(phone) {
+      height: $screenHeightMobile;
+    }
   }
 
   svg {
-    margin: auto;
+    @extend %logoLargeSize;
     position: absolute;
-    width: $logo-large-size;
-    height: $logo-large-size;
-    max-height: 47vh;
-    top: 22vh;
+    margin: auto;
+    top: 18dvh;
     right: 0;
     left: 0;
+
+    @include media(phone) {
+      top: 15dvh;
+    }
+
+    @include media(phoneLandscape) {
+      display: none;
+    }
+
+    @include media(tabletPortrait) {
+      top: 12dvh;
+    }
+
+    @include media(tabletLandscape) {
+      top: 10dvh;
+    }
   }
 
   p {
     max-width: 100%;
+
+    @include media(phone) {
+      font-size: 0.875rem;
+    }
   }
 }
 
 .heroSectionContent {
   @extend %contentStyles;
-  margin: auto 12vw 10vh auto;
+  margin: auto 12vw 10dvh auto;
   z-index: map-get($z-index, default);
+  animation: fade-in $time-smooth $time-normal forwards;
+  opacity: 0;
+
+  @include media(phone) {
+    margin: auto 0 $container-padding-mobile auto;
+  }
+
+  @include media(tabletPortrait) {
+    margin: auto 0 5dvh auto;
+  }
+
+  @include media(tabletLandscape) {
+    margin: auto 0 5dvh auto;
+  }
 }
 
 .sectionContent {
   padding: 7.5rem 0 0 6.5625rem;
+
+  @include media(phone) {
+    padding: 2.25rem 1.5rem;
+  }
+
+  @include media(tabletPortrait) {
+    padding: 2.25rem 1.5rem;
+  }
+
+  @include media(tabletLandscape) {
+    justify-content: center;
+    align-items: center;
+    padding: 0 1.5rem;
+    display: grid;
+  }
+
+  @include media(laptop) {
+    justify-content: center;
+    padding-left: 0;
+    display: flex;
+  }
+
+  @include media(desktop) {
+    justify-content: center;
+    padding-left: 0;
+    display: flex;
+  }
 }
 
 .columnSection {
   @extend %sectionStyles;
 
   > div:not(.hoverImageWrapper) {
-    grid-template-rows: 50vh calc(50vh - $header-height);
+    grid-template-rows: 50dvh calc(50dvh - $header-height);
+
+    @include media(phone) {
+      grid-template-rows: auto;
+    }
+
+    @include media(tabletPortrait) {
+      grid-template-rows: auto;
+    }
   }
 }
 
 .rowSection {
   @extend %sectionStyles;
-  grid-template-rows: 60vh calc(40vh - $header-height);
+  grid-template-rows: 60dvh calc(40dvh - $header-height);
+
+  @include media(phone) {
+    grid-template-rows: auto;
+  }
+
+  @include media(tabletPortrait) {
+    grid-template-rows: auto;
+  }
 }

@@ -5,6 +5,7 @@ import { ScrollOffsetContext } from 'utils/ScrollOffsetContext'
 
 import images from './images'
 import ImageViewer from 'components/ImageViewer'
+import { sizes } from 'components/constants'
 
 import { ReactComponent as LogoLarge } from 'assets/repliqua-logo-large.svg'
 
@@ -56,9 +57,28 @@ const Works = () => {
   const prevImage = useCallback(() => changeImage(-1), [changeImage])
   const nextImage = useCallback(() => changeImage(1), [changeImage])
 
-  const getTransformStyle = (offset, factor) => ({
-    transform: `translateY(-${offset * factor}px)`,
-  })
+  const getTransformStyleMinusY = useCallback(
+    (offset, factor) => ({
+      transform: `translateY(-${offset * factor}px)`,
+    }),
+    []
+  )
+
+  const getTransformStylePlusY = useCallback((offset, factor) => {
+    if (window.innerWidth <= sizes.DESKTOP_VIEWPORT) return
+
+    return {
+      transform: `translateY(${offset * factor}px)`,
+    }
+  }, [])
+
+  const getTransformStylePlusX = useCallback((offset, factor) => {
+    if (window.innerWidth <= sizes.DESKTOP_VIEWPORT) return
+
+    return {
+      transform: `translateX(${offset * factor}px)`,
+    }
+  }, [])
 
   return (
     <>
@@ -67,10 +87,10 @@ const Works = () => {
           src={HeroImage}
           alt='Some title text with sophisticated text goes here'
         />
-        <LogoLarge style={getTransformStyle(scrollOffset, 0.15)} />
+        <LogoLarge style={getTransformStyleMinusY(scrollOffset, 0.15)} />
         <div
           className={styles.heroSectionContent}
-          style={getTransformStyle(scrollOffset, 0.05)}
+          style={getTransformStyleMinusY(scrollOffset, 0.05)}
         >
           <h1>Some title text with sophisticated text goes here</h1>
           <p>
@@ -87,7 +107,7 @@ const Works = () => {
         <div>
           <ImageElement index={1} openModal={openModal} />
           <div className={clsx(styles.sectionContent, styles.colorBlue)}>
-            <p>
+            <p style={getTransformStylePlusY(scrollOffset, 0.025)}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
               molestiae qui facere quidem. Et tempore vitae at facilis sed,
               soluta enim nam, sint nostrum aperiam corrupti consectetur
@@ -101,7 +121,7 @@ const Works = () => {
         <div className={styles.mainContainer}>
           <div className={styles.colorGreen}></div>
           <div className={clsx(styles.sectionContent, styles.colorFoggy)}>
-            <p>
+            <p style={getTransformStylePlusX(scrollOffset, 0.025)}>
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem,
               deserunt doloribus. Corporis officia nostrum ex. Nisi hic maiores
               modi suscipit repellendus, minus nihil quaerat omnis assumenda
@@ -118,7 +138,7 @@ const Works = () => {
         <div className={styles.mainContainer}>
           <div className={styles.colorGreen}></div>
           <div className={clsx(styles.sectionContent, styles.colorFoggy)}>
-            <p>
+            <p style={getTransformStylePlusY(scrollOffset, 0.025)}>
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem,
               deserunt doloribus. Corporis officia nostrum ex. Nisi hic maiores
               modi suscipit repellendus, minus nihil quaerat omnis assumenda
@@ -132,7 +152,7 @@ const Works = () => {
         <div>
           <ImageElement index={6} openModal={openModal} />
           <div className={clsx(styles.sectionContent, styles.colorSand)}>
-            <p>
+            <p style={getTransformStylePlusX(scrollOffset, 0.025)}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
               molestiae qui facere quidem. Et tempore vitae at facilis sed,
               soluta enim nam, sint nostrum aperiam corrupti consectetur
@@ -146,7 +166,7 @@ const Works = () => {
         <div>
           <ImageElement index={8} openModal={openModal} />
           <div className={clsx(styles.sectionContent, styles.colorForest)}>
-            <p>
+            <p style={getTransformStylePlusY(scrollOffset, 0.025)}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
               molestiae qui facere quidem. Et tempore vitae at facilis sed,
               soluta enim nam, sint nostrum aperiam corrupti consectetur
@@ -163,7 +183,7 @@ const Works = () => {
         <div>
           <ImageElement index={11} openModal={openModal} />
           <div className={clsx(styles.sectionContent, styles.colorFoggy)}>
-            <p>
+            <p style={getTransformStylePlusX(scrollOffset, 0.025)}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
               molestiae qui facere quidem. Et tempore vitae at facilis sed,
               soluta enim nam, sint nostrum aperiam corrupti consectetur

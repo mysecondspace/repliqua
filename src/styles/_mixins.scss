@@ -1,0 +1,43 @@
+@mixin media($device) {
+  @if $device == phone {
+    @media only screen and (max-width: #{$phone}) {
+      @content;
+    }
+  }
+
+  @if $device == phoneLandscape {
+    @media only screen and (max-width: #{$tabletPortrait}) and (orientation: landscape) {
+      @content;
+    }
+  }
+
+  @if $device == tabletPortrait {
+    @media only screen and (min-width: #{$phone + 1px}) and (max-width: #{$tabletPortrait}) {
+      @content;
+    }
+  }
+
+  @if $device == tabletLandscape {
+    @media only screen and (min-width: #{$tabletPortrait + 1px}) and (max-width: #{$tabletLandscape}) {
+      @content;
+    }
+  }
+
+  @if $device == laptop {
+    @media only screen and (min-width: #{$tabletLandscape + 1px}) and (max-width: #{$laptop}) {
+      @content;
+    }
+  }
+
+  @if $device == desktop {
+    @media only screen and (min-width: #{$laptop + 1px}) and (max-width: #{$desktop}) {
+      @content;
+    }
+  }
+
+  @if $device == widescreen {
+    @media only screen and (min-width: #{$desktop + 1px}) {
+      @content;
+    }
+  }
+}

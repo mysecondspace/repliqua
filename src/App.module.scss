@@ -12,6 +12,10 @@
   article {
     background-color: $purple;
     padding-top: $header-height;
+
+    @include media(phone) {
+      padding-top: $header-height-mobile;
+    }
   }
 
   h1,

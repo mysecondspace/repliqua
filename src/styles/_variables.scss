@@ -1,14 +1,36 @@
 $time: 0.25s;
-$aside-width: 5.625rem;
+$time-normal: 1s;
+$time-smooth: 2s;
+
 $header-height: 4.5625rem;
+$header-height-mobile: 3.125rem;
+
+$screenHeight: calc(100dvh - $header-height);
+$screenHeightMobile: calc(100dvh - $header-height-mobile);
+
+$aside-width: 5.625rem;
+$aside-width-tablet: 3.125rem;
+
 $logo-large-size: 26.5625rem;
+
 $template-columns: 1.7fr 2.3fr;
+$template-columns-mobile: auto;
+
+$container-padding: 5.625rem;
+$container-padding-mobile: 1.125rem;
 
 $z-index: (
   default: 0,
   header: 2,
   modal: 3,
 );
+
+// media queries
+$phone: 540px;
+$tabletPortrait: 820px;
+$tabletLandscape: 1180px;
+$laptop: 1280px;
+$desktop: 1440px;
 
 // main-colors
 $black: #000;

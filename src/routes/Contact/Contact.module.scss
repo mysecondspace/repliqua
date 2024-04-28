@@ -1,5 +1,23 @@
 @import 'src/styles/index.scss';
 
+.contactBlock {
+  @include media(phone) {
+    padding-bottom: 6.25rem;
+  }
+
+  @include media(tabletPortrait) {
+    padding-bottom: 9.375rem;
+  }
+
+  @include media(tabletLandscape) {
+    padding-bottom: 9.375rem;
+  }
+
+  a {
+    @extend %headingStyles;
+  }
+}
+
 .regularPageContent {
   margin-bottom: 3.75rem;
 }

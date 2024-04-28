@@ -4,6 +4,14 @@
   background-color: $purple;
   height: 35.9375rem;
 
+  @include media(phone) {
+    height: $screenHeightMobile;
+  }
+
+  @include media(tabletLandscape) {
+    height: $screenHeight;
+  }
+
   div {
     display: grid;
     position: relative;
@@ -11,6 +19,18 @@
     justify-content: right;
     background-color: $green;
     padding-right: 5.9375rem;
+
+    @include media(phone) {
+      justify-content: left;
+      padding-left: 2.625rem;
+      padding-right: 0;
+    }
+
+    @include media(tabletPortrait) {
+      justify-content: left;
+      padding-left: 2.625rem;
+      padding-right: 0;
+    }
 
     span {
       color: $purple;

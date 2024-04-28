@@ -3,6 +3,7 @@ html {
 
   body {
     margin: 0;
+    opacity: 0;
     height: 100%;
     color: $black;
     min-width: 320px;
@@ -10,6 +11,7 @@ html {
     font-family: $lato;
     font-weight: $regular;
     background-color: $green;
+    animation: fade-in $time-normal forwards;
     -webkit-tap-highlight-color: transparent;
     -webkit-font-smoothing: antialiased;
 

@@ -12,7 +12,7 @@ import styles from './SmoothScroll.module.scss'
 
 Scrollbar.use(OverscrollPlugin)
 
-const dampingValue = 0.04
+const dampingValue = 0.05
 const options = {
   damping: dampingValue,
   plugins: {

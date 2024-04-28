@@ -4,13 +4,29 @@ $progressBarWidth: 0.0625rem;
 
 .smoothScroll {
   padding-right: $aside-width;
+
+  @include media(phone) {
+    padding-right: 0;
+  }
+
+  @include media(tabletPortrait) {
+    padding-right: $aside-width-tablet;
+  }
 }
 
 .pageScroll {
   right: calc($aside-width / 2);
   height: 8.4375rem;
   position: fixed;
-  bottom: 21.5vh;
+  bottom: 21.5dvh;
+
+  @include media(phone) {
+    display: none;
+  }
+
+  @include media(tabletPortrait) {
+    right: calc($aside-width-tablet / 2);
+  }
 
   &::before {
     content: '';
@@ -36,6 +52,14 @@ $progressBarWidth: 0.0625rem;
   right: calc($aside-width / 2);
   transform: translateX(calc(-50% + 1.25rem - $progressBarWidth / 2));
   position: fixed;
-  bottom: 3.25vh;
+  bottom: 3.25dvh;
   width: 1.25rem;
+
+  @include media(phone) {
+    display: none;
+  }
+
+  @include media(tabletPortrait) {
+    right: calc($aside-width-tablet / 2);
+  }
 }

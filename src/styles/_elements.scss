@@ -1,7 +1,33 @@
+%logoLargeSize {
+  max-height: 35dvh;
+  width: $logo-large-size;
+  height: $logo-large-size;
+
+  @include media(phone) {
+    width: calc($logo-large-size / 2);
+    height: calc($logo-large-size / 2);
+  }
+}
+
 %contentStyles {
   max-width: 42.5rem;
   row-gap: 1.5rem;
   display: grid;
+
+  @include media(phone) {
+    padding: 0 $container-padding-mobile;
+    row-gap: 1.125rem;
+  }
+
+  @include media(phoneLandscape) {
+    padding: 0 $container-padding-mobile;
+    row-gap: 1.125rem;
+  }
+
+  @include media(tabletPortrait) {
+    padding: 0 $container-padding-mobile;
+    max-width: 100%;
+  }
 }
 
 %headingStyles {
@@ -10,6 +36,11 @@
   font-weight: $bold;
   max-width: 75%;
   color: $green;
+
+  @include media(phone) {
+    font-size: 1.5rem;
+    max-width: 100%;
+  }
 }
 
 %paragraphStyles {
@@ -20,25 +51,53 @@
 .mainContainer {
   grid-template-columns: $template-columns;
   display: grid;
+
+  @include media(phone) {
+    grid-template-columns: $template-columns-mobile;
+  }
+
+  @include media(tabletPortrait) {
+    grid-template-columns: $template-columns-mobile;
+  }
 }
 
 .regularPage {
-  padding-top: 6.25rem;
-  margin: 0 5.75rem 0 9rem;
+  padding-top: 3.125rem;
+  margin: 0 $container-padding-mobile;
 
-  svg {
-    width: $logo-large-size;
-    height: $logo-large-size;
-    margin: 5.125rem 0 17.5rem;
+  @include media(widescreen) {
+    padding-top: 6.25rem;
+    margin: 0 5.75rem 0 9rem;
   }
 
-  a {
-    @extend %headingStyles;
+  svg {
+    @extend %logoLargeSize;
+    margin: 5.125rem 0 17.5rem;
+
+    @include media(phone) {
+      margin: 0 auto 3.125rem;
+    }
+
+    @include media(tabletPortrait) {
+      margin: 0 auto 3.125rem;
+    }
+
+    @include media(tabletLandscape) {
+      margin: 0 auto 3.125rem;
+    }
   }
 }
 
 .regularPageContent {
   @extend %contentStyles;
+
+  @include media(phone) {
+    padding: 0;
+  }
+
+  @include media(tabletPortrait) {
+    padding: 0;
+  }
 
   p {
     @extend %paragraphStyles;
