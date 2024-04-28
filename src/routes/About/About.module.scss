@@ -1,6 +1,9 @@
 @import 'src/styles/index.scss';
 
 $stepSize: 4.875rem;
+$lineWidth: 0.125rem;
+$columnGap: 1.875rem;
+$borderWidth: 0.0625rem;
 
 .mainContainer {
   @include media(tabletLandscape) {
@@ -10,7 +13,7 @@ $stepSize: 4.875rem;
 
 .stepsBlock {
   margin-top: 3.125rem;
-  column-gap: 1.875rem;
+  column-gap: $columnGap;
   grid-auto-flow: column;
   width: fit-content;
   display: grid;
@@ -30,16 +33,19 @@ $stepSize: 4.875rem;
     }
 
     &:not(:last-of-type)::before {
-      height: 0.125rem;
+      height: $lineWidth;
       top: calc($stepSize / 2);
-      left: calc($stepSize + 0.125rem);
-      width: calc(100% - $stepSize + 1.875rem - 0.125rem);
+      left: calc($stepSize + $borderWidth * 2);
+      width: calc(100% - $stepSize + $columnGap - $borderWidth * 2);
       background-color: $green-20;
       position: absolute;
       content: '';
 
       @include media(phone) {
-        display: none;
+        top: calc($stepSize + $borderWidth * 2);
+        height: calc(100% - $stepSize + $columnGap);
+        left: calc($stepSize / 2);
+        width: $lineWidth;
       }
     }
   }
@@ -51,7 +57,7 @@ $stepSize: 4.875rem;
     border-radius: 50%;
     font-weight: $bold;
     font-size: 1.125rem;
-    border: 0.0625rem solid $green-50;
+    border: $borderWidth solid $green-50;
     justify-content: center;
     align-items: center;
     display: grid;
