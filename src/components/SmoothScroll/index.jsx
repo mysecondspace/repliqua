@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
+import { useEffect, useRef, useState } from 'react'
 
 import { ScrollOffsetContext } from 'utils/ScrollOffsetContext'
 
@@ -33,9 +34,10 @@ const SmoothScroll = ({ children }) => {
   const ref = useRef(null)
 
   const handleScroll = () => {
-    scroll.current?.scrollTo(0, scroll.current.contentEl.scrollHeight, 2500, {
-      damping: dampingValue,
-    })
+    const scrollHeight = scroll.current.contentEl.scrollHeight
+    const target = percentage > 50 ? 0 : scrollHeight
+
+    scroll.current?.scrollTo(0, target, 2500, { damping: dampingValue })
   }
 
   const updateScrollPercentage = ({ offset: { y } }) => {
@@ -74,7 +76,13 @@ const SmoothScroll = ({ children }) => {
       <div className={styles.pageScroll}>
         <div style={{ top: `${percentage}%` }}></div>
       </div>
-      <ArrowIcon className={styles.buttonOnScroll} onClick={handleScroll} />
+      <ArrowIcon
+        className={clsx(
+          styles.buttonOnScroll,
+          percentage > 50 && styles.rotate
+        )}
+        onClick={handleScroll}
+      />
     </ScrollOffsetContext.Provider>
   )
 }

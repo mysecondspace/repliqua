@@ -51,6 +51,7 @@ $progressBarWidth: 0.0625rem;
   cursor: pointer;
   right: calc($aside-width / 2);
   transform: translateX(calc(-50% + 1.25rem - $progressBarWidth / 2));
+  transition: transform $time ease-in-out;
   position: fixed;
   bottom: 3.25dvh;
   width: 1.25rem;
@@ -61,5 +62,10 @@ $progressBarWidth: 0.0625rem;
 
   @include media(tabletPortrait) {
     right: calc($aside-width-tablet / 2);
+  }
+
+  &.rotate {
+    transform: translateX(calc(-50% + 1.25rem - $progressBarWidth / 2))
+      rotate(180deg);
   }
 }
