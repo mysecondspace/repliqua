@@ -1,6 +1,7 @@
 @import 'src/styles/index.scss';
 
 $progressBarWidth: 0.0625rem;
+$buttonWidth: 1.25rem;
 
 .smoothScroll {
   padding-right: $aside-width;
@@ -48,13 +49,13 @@ $progressBarWidth: 0.0625rem;
 }
 
 .buttonOnScroll {
-  cursor: pointer;
+  bottom: 3.25dvh;
+  width: $buttonWidth;
   right: calc($aside-width / 2);
-  transform: translateX(calc(-50% + 1.25rem - $progressBarWidth / 2));
+  transform: translateX(calc(-50% + $buttonWidth - $progressBarWidth / 2));
   transition: transform $time ease-in-out;
   position: fixed;
-  bottom: 3.25dvh;
-  width: 1.25rem;
+  cursor: pointer;
 
   @include media(phone) {
     display: none;
@@ -65,7 +66,7 @@ $progressBarWidth: 0.0625rem;
   }
 
   &.rotate {
-    transform: translateX(calc(-50% + 1.25rem - $progressBarWidth / 2))
+    transform: translateX(calc(-50% + $buttonWidth - $progressBarWidth / 2))
       rotate(180deg);
   }
 }
