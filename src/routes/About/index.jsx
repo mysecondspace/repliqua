@@ -6,26 +6,15 @@ import AvatarPlaceholder from 'assets/avatar-placeholder.jpg'
 
 import styles from './About.module.scss'
 
-const About = () => {
+const About = ({ data: { heading, description } }) => {
   return (
     <section className={styles.regularPage}>
       <div className={styles.mainContainer}>
         <LogoLarge />
         <div>
           <div className={styles.regularPageContent}>
-            <h1>To enlighten the beauty of what you see bla bla bla</h1>
-            <p>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-              commodo ligula eget dolor. Aenean massa. Cum sociis natoque
-              penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-              Donec quam felis, ultricies nec, pellentesque eu, pretium quis,
-              sem. Nulla consequat massa quis enim. Donec pede justo, fringilla
-              vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut,
-              imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede
-              mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum
-              semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula,
-              porttitor eu, consequat.
-            </p>
+            <h1>{heading}</h1>
+            <p>{description}</p>
           </div>
           <div className={styles.stepsBlock}>
             <div>

@@ -23,7 +23,7 @@ const ImageElement = ({ index, openModal }) => (
   </div>
 )
 
-const Works = () => {
+const Works = ({ data: { heading, description } }) => {
   const scrollOffset = useContext(ScrollOffsetContext)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
@@ -83,23 +83,14 @@ const Works = () => {
   return (
     <>
       <section className={styles.heroSection}>
-        <img
-          src={HeroImage}
-          alt='Some title text with sophisticated text goes here'
-        />
+        <img src={HeroImage} alt={heading} />
         <LogoLarge style={getTransformStyleMinusY(scrollOffset, 0.15)} />
         <div
           className={styles.heroSectionContent}
           style={getTransformStyleMinusY(scrollOffset, 0.05)}
         >
-          <h1>Some title text with sophisticated text goes here</h1>
-          <p>
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-            commodo ligula eget dolor. Aenean massa. Cum sociis natoque
-            penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-            Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
-            Nulla consequat massa quis enim. Donec pede justo, fringilla vel.
-          </p>
+          <h1>{heading}</h1>
+          <p>{description}</p>
         </div>
       </section>
       <section className={clsx(styles.columnSection, styles.mainContainer)}>

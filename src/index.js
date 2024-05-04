@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { GraphQLClient, ClientContext } from 'graphql-hooks'
 import axe from '@axe-core/react'
 
 import App from './App'
@@ -7,11 +8,20 @@ import reportWebVitals from './reportWebVitals'
 
 import './styles/index.scss'
 
+const client = new GraphQLClient({
+  url: 'https://graphql.datocms.com/',
+  headers: {
+    Authorization: `Bearer ${process.env.REACT_APP_DATO_API_TOKEN}`,
+  },
+})
+
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
   <React.StrictMode>
-    <App />
+    <ClientContext.Provider value={client}>
+      <App />
+    </ClientContext.Provider>
   </React.StrictMode>
 )
 
