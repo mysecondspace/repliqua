@@ -10,7 +10,7 @@ const Header = () => {
   const location = useLocation()
 
   const isActive = (path) => {
-    return location.pathname === path && styles.active
+    return location.pathname === path ? styles.active : ''
   }
 
   const renderLink = (path, text) => (

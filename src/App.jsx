@@ -27,6 +27,18 @@ const QUERY = `query {
     description
     email
   }
+  footer {
+    email
+    socials {
+      name
+      url
+    }
+    links {
+      name
+      link
+    }
+    copyright
+  }
 }`
 
 function App() {
@@ -35,7 +47,7 @@ function App() {
   if (loading) return 'Loading...'
   if (error) return 'Error'
 
-  const { work, about, contact } = data
+  const { work, about, contact, footer } = data
 
   return (
     <div className={styles.app}>
@@ -59,7 +71,7 @@ function App() {
                 />
               </Routes>
             </article>
-            <Footer />
+            <Footer data={footer} />
           </SmoothScroll>
         </BrowserRouter>
       </div>

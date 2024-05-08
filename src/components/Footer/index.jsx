@@ -3,33 +3,30 @@ import clsx from 'clsx'
 
 import styles from './Footer.module.scss'
 
-const Footer = () => {
+const Footer = ({ data: { email, socials, links, copyright } }) => {
   return (
     <footer className={clsx(styles.footer, styles.mainContainer)}>
       <div>
         <nav>
           <ul className={styles.navigation}>
             <li>
-              <a href='mailto:hello@repliqua.eu'>hello@repliqua.eu</a>
+              <a href={`mailto:${email}`}>{email}</a>
             </li>
-            <li>
-              <a
-                href='https://instagram.com'
-                rel='noreferrer noopener'
-                target='_blank'
-              >
-                Instagram
-              </a>
-            </li>
-            <li>
-              <a href='/'>Terms of serivce</a>
-            </li>
-            <li>
-              <a href='/'>Privacy policy</a>
-            </li>
+            {socials.map((social, index) => (
+              <li key={index}>
+                <a href={social.url} rel='noreferrer noopener' target='_blank'>
+                  {social.name}
+                </a>
+              </li>
+            ))}
+            {links.map((link, index) => (
+              <li key={index}>
+                <a href={link.link}>{link.name}</a>
+              </li>
+            ))}
           </ul>
         </nav>
-        <span>repliqua studio, Inc. or its affiliates</span>
+        <span>{copyright}</span>
       </div>
     </footer>
   )
