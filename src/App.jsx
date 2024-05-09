@@ -1,8 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useQuery } from 'graphql-hooks'
 
-import { Routes as RoutePaths } from './routePaths.js'
-
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import SmoothScroll from 'components/SmoothScroll'
@@ -17,6 +15,7 @@ const QUERY = `query {
   work {
     heading
     description
+    slug
   }
   about {
     heading
@@ -25,11 +24,13 @@ const QUERY = `query {
       title
       description
     }
+    slug
   }
   contact {
     heading
     description
     email
+    slug
   }
   footer {
     email
@@ -61,16 +62,10 @@ function App() {
           <SmoothScroll>
             <article>
               <Routes>
+                <Route path={work.slug} element={<Works data={work} />} />
+                <Route path={about.slug} element={<About data={about} />} />
                 <Route
-                  path={RoutePaths.WORKS}
-                  element={<Works data={work} />}
-                />
-                <Route
-                  path={RoutePaths.ABOUT}
-                  element={<About data={about} />}
-                />
-                <Route
-                  path={RoutePaths.CONTACT}
+                  path={contact.slug}
                   element={<Contact data={contact} />}
                 />
               </Routes>
