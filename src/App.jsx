@@ -21,6 +21,10 @@ const QUERY = `query {
   about {
     heading
     description
+    steps {
+      title
+      description
+    }
   }
   contact {
     heading
@@ -45,7 +49,7 @@ function App() {
   const { loading, error, data } = useQuery(QUERY)
 
   if (loading) return 'Loading...'
-  if (error) return 'Error'
+  if (error) return `Error! ${error.message}`
 
   const { work, about, contact, footer } = data
 
