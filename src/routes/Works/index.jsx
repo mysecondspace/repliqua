@@ -35,6 +35,89 @@ const ImageElement = ({ image, openModal }) => (
   </div>
 )
 
+const SectionContent = ({ backgroundColor, transformStyle, description }) => (
+  <div className={styles.sectionContent} style={{ backgroundColor }}>
+    <p style={transformStyle}>{description}</p>
+  </div>
+)
+
+const Project = ({
+  project,
+  openModal,
+  scrollOffset,
+  getTransformStylePlusY,
+  getTransformStylePlusX,
+}) => {
+  const { id, images, description, color, alternativeView } = project
+  const transformStyle =
+    images.length === 2
+      ? getTransformStylePlusY(scrollOffset, 0.015)
+      : getTransformStylePlusX(scrollOffset, 0.015)
+
+  switch (images.length) {
+    case 2:
+      if (!alternativeView) {
+        return (
+          <section
+            key={id}
+            className={clsx(styles.columnSection, styles.mainContainer)}
+          >
+            <ImageElement image={images[0]} openModal={openModal} />
+            <div>
+              <ImageElement image={images[1]} openModal={openModal} />
+              <SectionContent
+                backgroundColor={color.hex}
+                transformStyle={transformStyle}
+                description={description}
+              />
+            </div>
+          </section>
+        )
+      } else {
+        return (
+          <section key={id} className={styles.rowSection}>
+            <div className={styles.mainContainer}>
+              <ImageElement image={images[0]} openModal={openModal} />
+              <ImageElement image={images[1]} openModal={openModal} />
+            </div>
+            <div className={styles.mainContainer}>
+              <div className={styles.colorGreen}></div>
+              <SectionContent
+                backgroundColor={color.hex}
+                transformStyle={transformStyle}
+                description={description}
+              />
+            </div>
+          </section>
+        )
+      }
+    case 1:
+      if (description) {
+        return (
+          <section key={id} className={styles.rowSection}>
+            <ImageElement image={images[0]} openModal={openModal} />
+            <div className={styles.mainContainer}>
+              <div className={styles.colorGreen}></div>
+              <SectionContent
+                backgroundColor={color.hex}
+                transformStyle={transformStyle}
+                description={description}
+              />
+            </div>
+          </section>
+        )
+      } else {
+        return (
+          <section key={id}>
+            <ImageElement image={images[0]} openModal={openModal} />
+          </section>
+        )
+      }
+    default:
+      return null
+  }
+}
+
 const Works = ({ data: { hero, heading, description } }) => {
   const scrollOffset = useContext(ScrollOffsetContext)
   const [currentImageUrl, setCurrentImageUrl] = useState(null)
@@ -117,94 +200,15 @@ const Works = ({ data: { hero, heading, description } }) => {
         </div>
       </section>
 
-      {data.allProjects.map((project, index) => {
-        if (project.images.length === 2) {
-          if (project.alternativeView) {
-            return (
-              <section className={styles.rowSection}>
-                <div className={styles.mainContainer}>
-                  <ImageElement
-                    image={project.images[0]}
-                    openModal={openModal}
-                  />
-                  <ImageElement
-                    index={1}
-                    image={project.images[1]}
-                    openModal={openModal}
-                  />
-                </div>
-                <div className={styles.mainContainer}>
-                  <div className={styles.colorGreen}></div>
-                  <div
-                    className={styles.sectionContent}
-                    style={{ backgroundColor: project.color.hex }}
-                  >
-                    <p style={getTransformStylePlusY(scrollOffset, 0.015)}>
-                      {project.description}
-                      {index}
-                    </p>
-                  </div>
-                </div>
-              </section>
-            )
-          } else {
-            return (
-              <section
-                key={project.id}
-                className={clsx(styles.columnSection, styles.mainContainer)}
-              >
-                <ImageElement image={project.images[0]} openModal={openModal} />
-                <div>
-                  <ImageElement
-                    index={1}
-                    image={project.images[1]}
-                    openModal={openModal}
-                  />
-                  <div
-                    className={styles.sectionContent}
-                    style={{ backgroundColor: project.color.hex }}
-                  >
-                    <p style={getTransformStylePlusY(scrollOffset, 0.015)}>
-                      {project.description}
-                      {index}
-                    </p>
-                  </div>
-                </div>
-              </section>
-            )
-          }
-        }
-
-        if (project.images.length === 1) {
-          if (project.description) {
-            return (
-              <section className={styles.rowSection}>
-                <ImageElement image={project.images[0]} openModal={openModal} />
-                <div className={styles.mainContainer}>
-                  <div className={styles.colorGreen}></div>
-                  <div
-                    className={styles.sectionContent}
-                    style={{ backgroundColor: project.color.hex }}
-                  >
-                    <p style={getTransformStylePlusX(scrollOffset, 0.015)}>
-                      {project.description}
-                      {index}
-                    </p>
-                  </div>
-                </div>
-              </section>
-            )
-          } else {
-            return (
-              <section>
-                <ImageElement image={project.images[0]} openModal={openModal} />
-              </section>
-            )
-          }
-        }
-
-        return null
-      })}
+      {data.allProjects.map((project) => (
+        <Project
+          project={project}
+          openModal={openModal}
+          scrollOffset={scrollOffset}
+          getTransformStylePlusY={getTransformStylePlusY}
+          getTransformStylePlusX={getTransformStylePlusX}
+        />
+      ))}
 
       <ImageViewer
         isOpen={isOpen}
