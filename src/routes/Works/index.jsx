@@ -1,9 +1,9 @@
 import React, { useContext, useState, useCallback } from 'react'
+import { useCustomQuery } from 'useCustomQuery'
 import clsx from 'clsx'
 
 import { ScrollOffsetContext } from 'utils/ScrollOffsetContext'
 
-import images from './images'
 import ImageViewer from 'components/ImageViewer'
 import { sizes } from 'components/constants'
 
@@ -13,30 +13,45 @@ import HeroImage from 'assets/images/hero-image.jpg'
 
 import styles from './Works.module.scss'
 
-const ImageElement = ({ index, openModal }) => (
+const QUERY = `
+  query ProjectQuery {
+    allProjects {
+      id
+      images {
+        url
+        alt
+      }
+      name
+      description
+      color {
+        hex
+      }
+      alternativeView
+    }
+  }
+`
+
+const ImageElement = ({ image = { url: '', alt: '' }, openModal }) => (
   <div className={styles.hoverImageWrapper}>
-    <img
-      src={images[index].src}
-      alt={images[index].alt}
-      onClick={() => openModal(index)}
-    />
+    <img src={image.url} alt={image.alt} onClick={() => openModal(image.url)} />
   </div>
 )
 
 const Works = ({ data: { heading, description } }) => {
   const scrollOffset = useContext(ScrollOffsetContext)
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [currentImageUrl, setCurrentImageUrl] = useState(null)
+  const [error, data] = useCustomQuery(QUERY)
   const [isOpen, setIsOpen] = useState(false)
   const [opacity, setOpacity] = useState(1)
 
-  const openModal = (imageIndex) => {
+  const openModal = (image) => {
     setIsOpen(true)
-    setCurrentImageIndex(imageIndex)
+    setCurrentImageUrl(image)
   }
 
   const closeModal = () => {
     setIsOpen(false)
-    setTimeout(() => setCurrentImageIndex(0), 250)
+    setTimeout(() => setCurrentImageUrl(0), 250)
   }
 
   const changeImage = useCallback(
@@ -44,14 +59,18 @@ const Works = ({ data: { heading, description } }) => {
       setOpacity(0)
 
       setTimeout(() => {
-        setCurrentImageIndex(
-          (currentImageIndex + change + images.length) % images.length
+        const allImages = data.allProjects.flatMap((project) => project.images)
+        const currentIndex = allImages.findIndex(
+          (image) => image.url === currentImageUrl
         )
+        const nextIndex =
+          (currentIndex + change + allImages.length) % allImages.length
+        setCurrentImageUrl(allImages[nextIndex].url)
 
         setOpacity(1)
       }, 250)
     },
-    [currentImageIndex]
+    [currentImageUrl, data]
   )
 
   const prevImage = useCallback(() => changeImage(-1), [changeImage])
@@ -80,6 +99,12 @@ const Works = ({ data: { heading, description } }) => {
     }
   }, [])
 
+  if (error) {
+    console.error(error)
+
+    return null
+  }
+
   return (
     <>
       <section className={styles.heroSection}>
@@ -93,104 +118,99 @@ const Works = ({ data: { heading, description } }) => {
           <p>{description}</p>
         </div>
       </section>
-      <section className={clsx(styles.columnSection, styles.mainContainer)}>
-        <ImageElement index={0} openModal={openModal} />
-        <div>
-          <ImageElement index={1} openModal={openModal} />
-          <div className={clsx(styles.sectionContent, styles.colorBlue)}>
-            <p style={getTransformStylePlusY(scrollOffset, 0.015)}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
-              molestiae qui facere quidem. Et tempore vitae at facilis sed,
-              soluta enim nam, sint nostrum aperiam corrupti consectetur
-              provident tenetur. Minus.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section className={styles.rowSection}>
-        <ImageElement index={2} openModal={openModal} />
-        <div className={styles.mainContainer}>
-          <div className={styles.colorGreen}></div>
-          <div className={clsx(styles.sectionContent, styles.colorFoggy)}>
-            <p style={getTransformStylePlusX(scrollOffset, 0.015)}>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem,
-              deserunt doloribus. Corporis officia nostrum ex. Nisi hic maiores
-              modi suscipit repellendus, minus nihil quaerat omnis assumenda
-              dolores optio rem et.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section className={styles.rowSection}>
-        <div className={styles.mainContainer}>
-          <ImageElement index={3} openModal={openModal} />
-          <ImageElement index={4} openModal={openModal} />
-        </div>
-        <div className={styles.mainContainer}>
-          <div className={styles.colorGreen}></div>
-          <div className={clsx(styles.sectionContent, styles.colorFoggy)}>
-            <p style={getTransformStylePlusY(scrollOffset, 0.015)}>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem,
-              deserunt doloribus. Corporis officia nostrum ex. Nisi hic maiores
-              modi suscipit repellendus, minus nihil quaerat omnis assumenda
-              dolores optio rem et.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section className={clsx(styles.columnSection, styles.mainContainer)}>
-        <ImageElement index={5} openModal={openModal} />
-        <div>
-          <ImageElement index={6} openModal={openModal} />
-          <div className={clsx(styles.sectionContent, styles.colorSand)}>
-            <p style={getTransformStylePlusX(scrollOffset, 0.015)}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
-              molestiae qui facere quidem. Et tempore vitae at facilis sed,
-              soluta enim nam, sint nostrum aperiam corrupti consectetur
-              provident tenetur. Minus.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section className={clsx(styles.columnSection, styles.mainContainer)}>
-        <ImageElement index={7} openModal={openModal} />
-        <div>
-          <ImageElement index={8} openModal={openModal} />
-          <div className={clsx(styles.sectionContent, styles.colorForest)}>
-            <p style={getTransformStylePlusY(scrollOffset, 0.015)}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
-              molestiae qui facere quidem. Et tempore vitae at facilis sed,
-              soluta enim nam, sint nostrum aperiam corrupti consectetur
-              provident tenetur. Minus.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section>
-        <ImageElement index={9} openModal={openModal} />
-      </section>
-      <section className={clsx(styles.columnSection, styles.mainContainer)}>
-        <ImageElement index={10} openModal={openModal} />
-        <div>
-          <ImageElement index={11} openModal={openModal} />
-          <div className={clsx(styles.sectionContent, styles.colorFoggy)}>
-            <p style={getTransformStylePlusX(scrollOffset, 0.015)}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
-              molestiae qui facere quidem. Et tempore vitae at facilis sed,
-              soluta enim nam, sint nostrum aperiam corrupti consectetur
-              provident tenetur. Minus.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section>
-        <ImageElement index={12} openModal={openModal} />
-      </section>
+
+      {data.allProjects.map((project, index) => {
+        if (project.images.length === 2) {
+          if (project.alternativeView) {
+            return (
+              <section className={styles.rowSection}>
+                <div className={styles.mainContainer}>
+                  <ImageElement
+                    image={project.images[0]}
+                    openModal={openModal}
+                  />
+                  <ImageElement
+                    index={1}
+                    image={project.images[1]}
+                    openModal={openModal}
+                  />
+                </div>
+                <div className={styles.mainContainer}>
+                  <div className={styles.colorGreen}></div>
+                  <div
+                    className={styles.sectionContent}
+                    style={{ backgroundColor: project.color.hex }}
+                  >
+                    <p style={getTransformStylePlusY(scrollOffset, 0.015)}>
+                      {project.description}
+                      {index}
+                    </p>
+                  </div>
+                </div>
+              </section>
+            )
+          } else {
+            return (
+              <section
+                key={project.id}
+                className={clsx(styles.columnSection, styles.mainContainer)}
+              >
+                <ImageElement image={project.images[0]} openModal={openModal} />
+                <div>
+                  <ImageElement
+                    index={1}
+                    image={project.images[1]}
+                    openModal={openModal}
+                  />
+                  <div
+                    className={styles.sectionContent}
+                    style={{ backgroundColor: project.color.hex }}
+                  >
+                    <p style={getTransformStylePlusY(scrollOffset, 0.015)}>
+                      {project.description}
+                      {index}
+                    </p>
+                  </div>
+                </div>
+              </section>
+            )
+          }
+        }
+
+        if (project.images.length === 1) {
+          if (project.description) {
+            return (
+              <section className={styles.rowSection}>
+                <ImageElement image={project.images[0]} openModal={openModal} />
+                <div className={styles.mainContainer}>
+                  <div className={styles.colorGreen}></div>
+                  <div
+                    className={styles.sectionContent}
+                    style={{ backgroundColor: project.color.hex }}
+                  >
+                    <p style={getTransformStylePlusX(scrollOffset, 0.015)}>
+                      {project.description}
+                      {index}
+                    </p>
+                  </div>
+                </div>
+              </section>
+            )
+          } else {
+            return (
+              <section>
+                <ImageElement image={project.images[0]} openModal={openModal} />
+              </section>
+            )
+          }
+        }
+      })}
+
       <ImageViewer
         isOpen={isOpen}
         closeModal={closeModal}
-        images={images}
-        currentImageIndex={currentImageIndex}
+        images={data.allProjects.flatMap((project) => project.images)}
+        currentImageUrl={currentImageUrl}
         opacity={opacity}
         prevImage={prevImage}
         nextImage={nextImage}
