@@ -9,8 +9,6 @@ import { sizes } from 'components/constants'
 
 import { ReactComponent as LogoLarge } from 'assets/repliqua-logo-large.svg'
 
-import HeroImage from 'assets/images/hero-image.jpg'
-
 import styles from './Works.module.scss'
 
 const QUERY = `
@@ -31,13 +29,13 @@ const QUERY = `
   }
 `
 
-const ImageElement = ({ image = { url: '', alt: '' }, openModal }) => (
+const ImageElement = ({ image, openModal }) => (
   <div className={styles.hoverImageWrapper}>
     <img src={image.url} alt={image.alt} onClick={() => openModal(image.url)} />
   </div>
 )
 
-const Works = ({ data: { heading, description } }) => {
+const Works = ({ data: { hero, heading, description } }) => {
   const scrollOffset = useContext(ScrollOffsetContext)
   const [currentImageUrl, setCurrentImageUrl] = useState(null)
   const [error, data] = useCustomQuery(QUERY)
@@ -108,7 +106,7 @@ const Works = ({ data: { heading, description } }) => {
   return (
     <>
       <section className={styles.heroSection}>
-        <img src={HeroImage} alt={heading} />
+        <img src={hero.url} alt={hero.alt} />
         <LogoLarge style={getTransformStyleMinusY(scrollOffset, 0.15)} />
         <div
           className={styles.heroSectionContent}
@@ -204,6 +202,8 @@ const Works = ({ data: { heading, description } }) => {
             )
           }
         }
+
+        return null
       })}
 
       <ImageViewer

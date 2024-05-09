@@ -13,6 +13,10 @@ import styles from './App.module.scss'
 
 const QUERY = `query {
   work {
+    hero {
+      url
+      alt
+    }
     heading
     description
     slug
