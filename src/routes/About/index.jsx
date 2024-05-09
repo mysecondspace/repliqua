@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from 'graphql-hooks'
+import { useCustomQuery } from 'useCustomQuery'
 
 import { ReactComponent as LogoLarge } from 'assets/repliqua-logo-large.svg'
 
@@ -8,6 +8,7 @@ import styles from './About.module.scss'
 const QUERY = `
   query TeamQuery {
     allTeams {
+      id
       photo {
         url
       }
@@ -19,10 +20,13 @@ const QUERY = `
 `
 
 const About = ({ data: { heading, description, steps } }) => {
-  const { loading, error, data } = useQuery(QUERY)
+  const [error, data] = useCustomQuery(QUERY)
 
-  if (loading) return 'Loading...'
-  if (error) return `Error! ${error.message}`
+  if (error) {
+    console.error(error)
+
+    return null
+  }
 
   const Step = ({ step: { title, description }, index }) => (
     <div>
@@ -54,14 +58,14 @@ const About = ({ data: { heading, description, steps } }) => {
           </div>
           <div className={styles.stepsBlock}>
             {steps.map((step, index) => (
-              <Step key={index} step={step} index={index} />
+              <Step key={step.id} step={step} index={index} />
             ))}
           </div>
           <div className={styles.teamBlock}>
             <h2>Team</h2>
             <div>
-              {data.allTeams.map((member, index) => (
-                <Member key={index} member={member} />
+              {data.allTeams.map((member) => (
+                <Member key={member.id} member={member} />
               ))}
             </div>
           </div>

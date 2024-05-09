@@ -1,9 +1,39 @@
-import React from 'react'
 import clsx from 'clsx'
+import React from 'react'
+import { useCustomQuery } from 'useCustomQuery'
 
 import styles from './Footer.module.scss'
 
-const Footer = ({ data: { email, socials, links, copyright } }) => {
+const QUERY = `{
+  footer {
+    email
+    socials {
+      id
+      name
+      url
+    }
+    links {
+      id
+      name
+      link
+    }
+    copyright
+  }
+}`
+
+const Footer = () => {
+  const [error, data] = useCustomQuery(QUERY)
+
+  if (error) {
+    console.error(error)
+
+    return null
+  }
+
+  const {
+    footer: { email, socials, links, copyright },
+  } = data
+
   return (
     <footer className={clsx(styles.footer, styles.mainContainer)}>
       <div>
@@ -12,15 +42,15 @@ const Footer = ({ data: { email, socials, links, copyright } }) => {
             <li>
               <a href={`mailto:${email}`}>{email}</a>
             </li>
-            {socials.map((social, index) => (
-              <li key={index}>
+            {socials.map((social) => (
+              <li key={social.id}>
                 <a href={social.url} rel='noreferrer noopener' target='_blank'>
                   {social.name}
                 </a>
               </li>
             ))}
-            {links.map((link, index) => (
-              <li key={index}>
+            {links.map((link) => (
+              <li key={link.id}>
                 <a href={link.link}>{link.name}</a>
               </li>
             ))}

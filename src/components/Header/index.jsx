@@ -1,6 +1,6 @@
 import React from 'react'
-import { useQuery } from 'graphql-hooks'
 import { useLocation } from 'react-router-dom'
+import { useCustomQuery } from 'useCustomQuery'
 
 import { ReactComponent as LogoSmall } from 'assets/repliqua-logo-small.svg'
 
@@ -29,15 +29,18 @@ const QUERY = `{
 }`
 
 const Header = () => {
-  const { loading, error, data } = useQuery(QUERY)
+  const [error, data] = useCustomQuery(QUERY)
   const location = useLocation()
 
   const isActive = (path) => {
     return location.pathname === path ? styles.active : ''
   }
 
-  if (loading) return 'Loading...'
-  if (error) return `Error! ${error.message}`
+  if (error) {
+    console.error(error)
+
+    return null
+  }
 
   const { menu } = data.header
 
