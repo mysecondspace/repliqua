@@ -1,42 +1,138 @@
 import React, { useContext, useState, useCallback } from 'react'
+import { useCustomQuery } from 'useCustomQuery'
 import clsx from 'clsx'
 
 import { ScrollOffsetContext } from 'utils/ScrollOffsetContext'
 
-import images from './images'
 import ImageViewer from 'components/ImageViewer'
 import { sizes } from 'components/constants'
 
 import { ReactComponent as LogoLarge } from 'assets/repliqua-logo-large.svg'
 
-import HeroImage from 'assets/images/hero-image.jpg'
-
 import styles from './Works.module.scss'
 
-const ImageElement = ({ index, openModal }) => (
+const QUERY = `
+  query ProjectQuery {
+    allProjects {
+      id
+      images {
+        url
+        alt
+      }
+      name
+      description
+      color {
+        hex
+      }
+      alternativeView
+    }
+  }
+`
+
+const ImageElement = ({ image, openModal }) => (
   <div className={styles.hoverImageWrapper}>
-    <img
-      src={images[index].src}
-      alt={images[index].alt}
-      onClick={() => openModal(index)}
-    />
+    <img src={image.url} alt={image.alt} onClick={() => openModal(image.url)} />
   </div>
 )
 
-const Works = () => {
+const SectionContent = ({ backgroundColor, transformStyle, description }) => (
+  <div className={styles.sectionContent} style={{ backgroundColor }}>
+    <p style={transformStyle}>{description}</p>
+  </div>
+)
+
+const Project = ({
+  project,
+  openModal,
+  scrollOffset,
+  getTransformStylePlusY,
+  getTransformStylePlusX,
+}) => {
+  const { id, images, description, color, alternativeView } = project
+  const transformStyle =
+    images.length === 2
+      ? getTransformStylePlusY(scrollOffset, 0.015)
+      : getTransformStylePlusX(scrollOffset, 0.015)
+
+  switch (images.length) {
+    case 2:
+      if (!alternativeView) {
+        return (
+          <section
+            key={id}
+            className={clsx(styles.columnSection, styles.mainContainer)}
+          >
+            <ImageElement image={images[0]} openModal={openModal} />
+            <div>
+              <ImageElement image={images[1]} openModal={openModal} />
+              <SectionContent
+                backgroundColor={color.hex}
+                transformStyle={transformStyle}
+                description={description}
+              />
+            </div>
+          </section>
+        )
+      } else {
+        return (
+          <section key={id} className={styles.rowSection}>
+            <div className={styles.mainContainer}>
+              <ImageElement image={images[0]} openModal={openModal} />
+              <ImageElement image={images[1]} openModal={openModal} />
+            </div>
+            <div className={styles.mainContainer}>
+              <div className={styles.colorGreen}></div>
+              <SectionContent
+                backgroundColor={color.hex}
+                transformStyle={transformStyle}
+                description={description}
+              />
+            </div>
+          </section>
+        )
+      }
+    case 1:
+      if (description) {
+        return (
+          <section key={id} className={styles.rowSection}>
+            <ImageElement image={images[0]} openModal={openModal} />
+            <div className={styles.mainContainer}>
+              <div className={styles.colorGreen}></div>
+              <SectionContent
+                backgroundColor={color.hex}
+                transformStyle={transformStyle}
+                description={description}
+              />
+            </div>
+          </section>
+        )
+      } else {
+        return (
+          <section key={id}>
+            <ImageElement image={images[0]} openModal={openModal} />
+          </section>
+        )
+      }
+    default:
+      return null
+  }
+}
+
+const Works = ({ data: { hero, heading, description } }) => {
   const scrollOffset = useContext(ScrollOffsetContext)
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [currentImageUrl, setCurrentImageUrl] = useState(null)
+  const [error, data] = useCustomQuery(QUERY)
   const [isOpen, setIsOpen] = useState(false)
   const [opacity, setOpacity] = useState(1)
 
-  const openModal = (imageIndex) => {
+  const openModal = (image) => {
     setIsOpen(true)
-    setCurrentImageIndex(imageIndex)
+    setCurrentImageUrl(image)
   }
 
   const closeModal = () => {
     setIsOpen(false)
-    setTimeout(() => setCurrentImageIndex(0), 250)
+    setTimeout(() => setCurrentImageUrl(0), 250)
   }
 
   const changeImage = useCallback(
@@ -44,14 +140,18 @@ const Works = () => {
       setOpacity(0)
 
       setTimeout(() => {
-        setCurrentImageIndex(
-          (currentImageIndex + change + images.length) % images.length
+        const allImages = data.allProjects.flatMap((project) => project.images)
+        const currentIndex = allImages.findIndex(
+          (image) => image.url === currentImageUrl
         )
+        const nextIndex =
+          (currentIndex + change + allImages.length) % allImages.length
+        setCurrentImageUrl(allImages[nextIndex].url)
 
         setOpacity(1)
       }, 250)
     },
-    [currentImageIndex]
+    [currentImageUrl, data]
   )
 
   const prevImage = useCallback(() => changeImage(-1), [changeImage])
@@ -80,126 +180,41 @@ const Works = () => {
     }
   }, [])
 
+  if (error) {
+    console.error(error)
+
+    return null
+  }
+
   return (
     <>
       <section className={styles.heroSection}>
-        <img
-          src={HeroImage}
-          alt='Some title text with sophisticated text goes here'
-        />
+        <img src={hero.url} alt={hero.alt} />
         <LogoLarge style={getTransformStyleMinusY(scrollOffset, 0.15)} />
         <div
           className={styles.heroSectionContent}
           style={getTransformStyleMinusY(scrollOffset, 0.05)}
         >
-          <h1>Some title text with sophisticated text goes here</h1>
-          <p>
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-            commodo ligula eget dolor. Aenean massa. Cum sociis natoque
-            penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-            Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
-            Nulla consequat massa quis enim. Donec pede justo, fringilla vel.
-          </p>
+          <h1>{heading}</h1>
+          <p>{description}</p>
         </div>
       </section>
-      <section className={clsx(styles.columnSection, styles.mainContainer)}>
-        <ImageElement index={0} openModal={openModal} />
-        <div>
-          <ImageElement index={1} openModal={openModal} />
-          <div className={clsx(styles.sectionContent, styles.colorBlue)}>
-            <p style={getTransformStylePlusY(scrollOffset, 0.015)}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
-              molestiae qui facere quidem. Et tempore vitae at facilis sed,
-              soluta enim nam, sint nostrum aperiam corrupti consectetur
-              provident tenetur. Minus.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section className={styles.rowSection}>
-        <ImageElement index={2} openModal={openModal} />
-        <div className={styles.mainContainer}>
-          <div className={styles.colorGreen}></div>
-          <div className={clsx(styles.sectionContent, styles.colorFoggy)}>
-            <p style={getTransformStylePlusX(scrollOffset, 0.015)}>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem,
-              deserunt doloribus. Corporis officia nostrum ex. Nisi hic maiores
-              modi suscipit repellendus, minus nihil quaerat omnis assumenda
-              dolores optio rem et.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section className={styles.rowSection}>
-        <div className={styles.mainContainer}>
-          <ImageElement index={3} openModal={openModal} />
-          <ImageElement index={4} openModal={openModal} />
-        </div>
-        <div className={styles.mainContainer}>
-          <div className={styles.colorGreen}></div>
-          <div className={clsx(styles.sectionContent, styles.colorFoggy)}>
-            <p style={getTransformStylePlusY(scrollOffset, 0.015)}>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem,
-              deserunt doloribus. Corporis officia nostrum ex. Nisi hic maiores
-              modi suscipit repellendus, minus nihil quaerat omnis assumenda
-              dolores optio rem et.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section className={clsx(styles.columnSection, styles.mainContainer)}>
-        <ImageElement index={5} openModal={openModal} />
-        <div>
-          <ImageElement index={6} openModal={openModal} />
-          <div className={clsx(styles.sectionContent, styles.colorSand)}>
-            <p style={getTransformStylePlusX(scrollOffset, 0.015)}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
-              molestiae qui facere quidem. Et tempore vitae at facilis sed,
-              soluta enim nam, sint nostrum aperiam corrupti consectetur
-              provident tenetur. Minus.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section className={clsx(styles.columnSection, styles.mainContainer)}>
-        <ImageElement index={7} openModal={openModal} />
-        <div>
-          <ImageElement index={8} openModal={openModal} />
-          <div className={clsx(styles.sectionContent, styles.colorForest)}>
-            <p style={getTransformStylePlusY(scrollOffset, 0.015)}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
-              molestiae qui facere quidem. Et tempore vitae at facilis sed,
-              soluta enim nam, sint nostrum aperiam corrupti consectetur
-              provident tenetur. Minus.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section>
-        <ImageElement index={9} openModal={openModal} />
-      </section>
-      <section className={clsx(styles.columnSection, styles.mainContainer)}>
-        <ImageElement index={10} openModal={openModal} />
-        <div>
-          <ImageElement index={11} openModal={openModal} />
-          <div className={clsx(styles.sectionContent, styles.colorFoggy)}>
-            <p style={getTransformStylePlusX(scrollOffset, 0.015)}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
-              molestiae qui facere quidem. Et tempore vitae at facilis sed,
-              soluta enim nam, sint nostrum aperiam corrupti consectetur
-              provident tenetur. Minus.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section>
-        <ImageElement index={12} openModal={openModal} />
-      </section>
+
+      {data.allProjects.map((project) => (
+        <Project
+          project={project}
+          openModal={openModal}
+          scrollOffset={scrollOffset}
+          getTransformStylePlusY={getTransformStylePlusY}
+          getTransformStylePlusX={getTransformStylePlusX}
+        />
+      ))}
+
       <ImageViewer
         isOpen={isOpen}
         closeModal={closeModal}
-        images={images}
-        currentImageIndex={currentImageIndex}
+        images={data.allProjects.flatMap((project) => project.images)}
+        currentImageUrl={currentImageUrl}
         opacity={opacity}
         prevImage={prevImage}
         nextImage={nextImage}

@@ -79,7 +79,7 @@ const SmoothScroll = ({ children }) => {
       <ArrowIcon
         className={clsx(
           styles.buttonOnScroll,
-          percentage > 50 && styles.rotate
+          percentage > 50 ? styles.rotate : ''
         )}
         onClick={handleScroll}
       />

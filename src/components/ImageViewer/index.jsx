@@ -23,13 +23,16 @@ const ImageViewer = ({
   isOpen,
   closeModal,
   images,
-  currentImageIndex,
+  currentImageUrl,
   opacity,
   prevImage,
   nextImage,
 }) => {
   useKeydown('ArrowLeft', prevImage)
   useKeydown('ArrowRight', nextImage)
+
+  const currentImage = images.find((image) => image.url === currentImageUrl)
+  const { url = '', alt = '' } = currentImage || {}
 
   return (
     <Modal
@@ -47,17 +50,13 @@ const ImageViewer = ({
         Close
       </span>
       <div className={styles.body}>
-        <img
-          src={images[currentImageIndex].src}
-          alt={images[currentImageIndex].alt}
-          style={{ opacity: opacity }}
-        />
+        <img src={url} alt={alt} style={{ opacity: opacity }} />
         <div className={styles.controls}>
           <span onClick={prevImage}>
             <ArrowIcon />
             previous
           </span>
-          <p>{images[currentImageIndex].alt}</p>
+          <p>{alt}</p>
           <span onClick={nextImage}>
             next
             <ArrowIcon />
